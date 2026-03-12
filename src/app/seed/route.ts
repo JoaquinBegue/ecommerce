@@ -4,6 +4,13 @@ import { products, users } from "@/lib/placeholder-data";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
+async function test() {
+  const users = await sql`
+  SELECT * FROM users;`;
+
+  return users;
+}
+
 async function seedUsers() {
   await sql`
     CREATE TABLE IF NOT EXISTS users (
@@ -57,10 +64,11 @@ async function seedProducts() {
 
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [seedProducts()]);
+    const result = await sql.begin((sql) => [test()]);
 
     return Response.json({ message: "Database seeded successfully" });
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }
 }
+
