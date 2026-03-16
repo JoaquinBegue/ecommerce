@@ -6,7 +6,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 async function test() {
   const users = await sql`
-  SELECT * FROM users;`;
+  SELECT * FROM products;`;
 
   return users;
 }
@@ -66,9 +66,8 @@ export async function GET() {
   try {
     const result = await sql.begin((sql) => [test()]);
 
-    return Response.json({ message: "Database seeded successfully" });
+    return Response.json({ message: result });
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }
 }
-
