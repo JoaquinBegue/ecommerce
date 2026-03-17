@@ -62,9 +62,21 @@ async function seedProducts() {
   return insertedProducts;
 }
 
+async function createCartsTable() {
+  await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS carts (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      owner_id UUID NOT NULL,
+      products_ids UUID[]
+    );
+  `;
+}
+
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [test()]);
+    const result = await sql.begin((sql) => [createCartsTable()]);
 
     return Response.json({ message: result });
   } catch (error) {

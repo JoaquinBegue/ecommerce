@@ -8,18 +8,49 @@ export default function Page() {
   const [state, formAction] = useActionState(createProduct, initialState);
 
   return (
-    <form action={formAction}>
-      <input name="name" type="text" placeholder="name"></input>
-      <input name="description" type="text" placeholder="description"></input>
-      <input name="price" type="number" placeholder="price"></input>
-      <input name="stock" type="number" placeholder="stock"></input>
-      <input name="category" type="text" placeholder="category"></input>
-      <button type="submit">Submit</button>
-      <p>Name: {state.errors?.name}</p>
-      <p>Description: {state.errors?.description}</p>
-      <p>Price: {state.errors?.price}</p>
-      <p>Stock: {state.errors?.stock}</p>
-      <p>Category: {state.errors?.category}</p>
+    <form action={formAction} className="w-52 mx-auto mt-10">
+      <h1 className="mx-auto w-fit">Create Product</h1>
+      <input
+        className="border-2 rounded-md p-1 m-2"
+        name="name"
+        type="text"
+        placeholder="name"
+      ></input>
+      <p>{state.errors?.name && `Name ${state.errors?.name}`}</p>
+      <input
+        className="border-2 rounded-md p-1 m-2"
+        name="description"
+        type="text"
+        placeholder="description"
+      ></input>
+      <p>
+        {state.errors?.description &&
+          `Description ${state.errors?.description}`}
+      </p>
+      <input
+        className="border-2 rounded-md p-1 m-2"
+        name="price"
+        type="number"
+        placeholder="price"
+      ></input>
+      <p>{state.errors?.price && `Price ${state.errors?.price}`}</p>
+      <input
+        className="border-2 rounded-md p-1 m-2"
+        name="stock"
+        type="number"
+        placeholder="stock"
+      ></input>
+      <p>{state.errors?.stock && `Stock ${state.errors?.stock}`}</p>
+      <input
+        className="border-2 rounded-md p-1 m-2"
+        name="category"
+        type="text"
+        placeholder="category"
+      ></input>
+      <p>{state.errors?.category && `Category ${state.errors?.category}`}</p>
+      <button className="mx-auto border-2 rounded-md w-fit" type="submit">
+        Submit
+      </button>
     </form>
   );
 }
