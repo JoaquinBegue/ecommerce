@@ -99,10 +99,9 @@ export async function createCart(
 ) {
   const validatedFields = CreateCart.safeParse({
     owner_id: formData.get("owner-id"),
-    products_ids: formData.getAll("products-ids"),
-
+    products_ids: formData.get("products-ids")?.toString().split(" "),
   });
-
+  console.log(validatedFields.data?.products_ids);
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
