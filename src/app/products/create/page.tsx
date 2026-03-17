@@ -1,10 +1,10 @@
 "use client";
 
-import { createProduct, State } from "@/lib/actions";
+import { createProduct, productState } from "@/lib/actions";
 import { useActionState } from "react";
 
 export default function Page() {
-  const initialState: State = { message: null, errors: {} };
+  const initialState: productState = { message: null, errors: {} };
   const [state, formAction] = useActionState(createProduct, initialState);
 
   return (

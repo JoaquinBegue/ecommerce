@@ -35,7 +35,7 @@ const CreateProduct = ProductFormSchema.omit({ id: true });
 const CreateCart = CartFormSchema.omit({ id: true });
 const CreateOrder = OrderFormSchema.omit({ id: true });
 
-export type State = {
+export type productState = {
   errors?: {
     name?: string[];
     description?: string[];
@@ -46,8 +46,16 @@ export type State = {
   message?: string | null;
 };
 
+export type cartState = {
+  errors?: {
+    owner_id?: string[];
+    products_ids?: string[];
+  };
+  message?: string | null;
+};
+
 export async function createProduct(
-  prevState: State | undefined,
+  prevState: productState | undefined,
   formData: FormData,
 ) {
   const validatedFields = CreateProduct.safeParse({
@@ -86,7 +94,7 @@ export async function createProduct(
 }
 
 export async function createCart(
-  prevState: State | undefined,
+  prevState: cartState | undefined,
   formData: FormData,
 ) {
   const validatedFields = CreateCart.safeParse({
