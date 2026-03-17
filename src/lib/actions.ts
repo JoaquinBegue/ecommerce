@@ -80,7 +80,44 @@ export async function createProduct(
   } catch (error) {
     console.error(error);
     return {
-      message: "Database Error: Failed to Create Invoice.",
+      message: "Database Error: Failed to Create Product.",
+    };
+  }
+}
+
+export async function createCart(
+  prevState: State | undefined,
+  formData: FormData,
+) {
+  const validatedFields = CreateCart.safeParse({
+    owner_id: formData.get("owner-id"),
+    products_ids: formData.getAll("products-ids"),
+
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Cart.",
+    };
+  }
+
+  const { owner_id, products_ids } = validatedFields.data;
+
+  try {
+    await sql`
+      INSERT INTO carts (owner_id, products_ids)
+      VALUES (${owner_id}, ${products_ids})
+      ON CONFLICT (id) DO NOTHING;
+    `;
+    revalidatePath("/carts");
+    return {
+      message: "Cart created successfully.",
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      message: "Database Error: Failed to Create Cart.",
     };
   }
 }

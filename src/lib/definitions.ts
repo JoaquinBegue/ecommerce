@@ -9,14 +9,14 @@ export type Product = {
 
 export type Cart = {
   id: string;
-  owner: User;
-  products: Array<Product>;
+  owner_id: string;
+  products_ids: Array<string>;
 };
 
 export type Order = {
   id: string;
-  owner: User;
-  products: Array<Product>;
+  owner_id: string;
+  products_ids: Array<string>;
   total_amount: number;
   date: Date;
 };
